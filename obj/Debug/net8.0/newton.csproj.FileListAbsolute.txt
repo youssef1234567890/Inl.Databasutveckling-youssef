@@ -1,0 +1,6 @@
+C:\Users\me\Desktop\moddb\newton\obj\Debug\net8.0\newton.csproj.AssemblyReference.cache
+C:\Users\me\Desktop\moddb\newton\obj\Debug\net8.0\newton.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\me\Desktop\moddb\newton\obj\Debug\net8.0\newton.AssemblyInfoInputs.cache
+C:\Users\me\Desktop\moddb\newton\obj\Debug\net8.0\newton.AssemblyInfo.cs
+C:\Users\me\Desktop\moddb\newton\obj\Debug\net8.0\newton.csproj.CoreCompileInputs.cache
+C:\Users\me\Desktop\moddb\newton\obj\Debug\net8.0\newton.sourcelink.json
