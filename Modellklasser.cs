@@ -3,49 +3,72 @@ using System.Collections.Generic;
 
 public class Author
 {
+    // Unique identifier for the author
     public int AuthorID { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public DateTime BirthDate { get; set; }
-    public string Nationality { get; set; }
 
-    // Många-till-många-relation med Book
+    // Full name of the author (combined first and last name)
+    public string Name { get; set; }
+
+    // Birth date of the author
+    public DateTime BirthDate { get; set; }
+
+    // Many-to-many relationship with Book through the BookAuthor table
     public ICollection<BookAuthor> BookAuthors { get; set; }
 }
 
 public class Book
 {
+    // Unique identifier for the book
     public int BookID { get; set; }
-    public string Title { get; set; }
-    public string Genre { get; set; }
-    public int PublicationYear { get; set; }
-    public string ISBN { get; set; }
 
-    // Många-till-många-relation med Author
+    // Title of the book
+    public string Title { get; set; }
+
+    // Genre of the book (e.g., Fiction, Non-fiction)
+    public string Genre { get; set; }
+
+    // Publication year of the book
+    public int PublicationYear { get; set; }
+
+    // Many-to-many relationship with Author through the BookAuthor table
     public ICollection<BookAuthor> BookAuthors { get; set; }
 
-    // En-till-många-relation med Loan
+    // One-to-many relationship with Loan table
     public ICollection<Loan> Loans { get; set; }
 }
 
 public class BookAuthor
 {
+    // Foreign key to the Book entity
     public int BookID { get; set; }
+
+    // Foreign key to the Author entity
     public int AuthorID { get; set; }
 
-    // Navigation properties
+    // Navigation property for the related Book
     public Book Book { get; set; }
+
+    // Navigation property for the related Author
     public Author Author { get; set; }
 }
 
 public class Loan
 {
+    // Unique identifier for the loan
     public int LoanID { get; set; }
+
+    // Foreign key to the Book entity
     public int BookID { get; set; }
+
+    // Date when the book was loaned
     public DateTime LoanDate { get; set; }
-    public DateTime? ReturnDate { get; set; }  // Nullable, eftersom boken kanske inte har återlämnats
+
+    // Date when the book was returned (nullable in case it's not returned yet)
+    public DateTime? ReturnDate { get; set; }
+
+    // Name of the reader who loaned the book
     public string ReaderName { get; set; }
 
-    // Navigation property
+    // Navigation property for the related Book
     public Book Book { get; set; }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 class LibraryManager
 {
     public void ManageLibrary()
     {
+        // Display menu options for library management
         Console.WriteLine("1: Add Author");
         Console.WriteLine("2: Add Book");
         Console.WriteLine("3: Add Book-Author Relation");
@@ -17,36 +19,34 @@ class LibraryManager
 
         while (true)
         {
+            // Prompt user for their choice
             Console.Write("\nEnter your choice: ");
             string choice = Console.ReadLine();
 
             switch (choice)
             {
                 case "1":
-                    Console.Write("Enter First Name: ");
-                    string firstName = Console.ReadLine();
-                    Console.Write("Enter Last Name: ");
-                    string lastName = Console.ReadLine();
+                    // Adding a new author
+                    Console.Write("Enter Full Name: ");
+                    string name = Console.ReadLine();
                     Console.Write("Enter Birth Date (yyyy-mm-dd): ");
                     DateTime birthDate = DateTime.Parse(Console.ReadLine());
-                    Console.Write("Enter Nationality: ");
-                    string nationality = Console.ReadLine();
-                    AddAuthor(firstName, lastName, birthDate, nationality);
+                    AddAuthor(name, birthDate);
                     break;
 
                 case "2":
+                    // Adding a new book
                     Console.Write("Enter Title: ");
                     string title = Console.ReadLine();
                     Console.Write("Enter Genre: ");
                     string genre = Console.ReadLine();
                     Console.Write("Enter Publication Year: ");
                     int publicationYear = int.Parse(Console.ReadLine());
-                    Console.Write("Enter ISBN: ");
-                    string isbn = Console.ReadLine();
-                    AddBook(title, genre, publicationYear, isbn);
+                    AddBook(title, genre, publicationYear);
                     break;
 
                 case "3":
+                    // Creating a relation between a book and an author
                     Console.Write("Enter BookID: ");
                     int bookId = int.Parse(Console.ReadLine());
                     Console.Write("Enter AuthorID: ");
@@ -55,6 +55,7 @@ class LibraryManager
                     break;
 
                 case "4":
+                    // Adding a loan for a book
                     Console.Write("Enter BookID: ");
                     int loanBookId = int.Parse(Console.ReadLine());
                     Console.Write("Enter Reader Name: ");
@@ -65,62 +66,68 @@ class LibraryManager
                     break;
 
                 case "5":
+                    // Deleting an author
                     Console.Write("Enter AuthorID to delete: ");
                     int deleteAuthorId = int.Parse(Console.ReadLine());
                     DeleteAuthor(deleteAuthorId);
                     break;
 
                 case "6":
+                    // Deleting a book
                     Console.Write("Enter BookID to delete: ");
                     int deleteBookId = int.Parse(Console.ReadLine());
                     DeleteBook(deleteBookId);
                     break;
 
                 case "7":
+                    // Deleting a loan
                     Console.Write("Enter LoanID to delete: ");
                     int deleteLoanId = int.Parse(Console.ReadLine());
                     DeleteLoan(deleteLoanId);
                     break;
 
                 case "8":
+                    // Listing all books with their authors
                     ListAllBooksWithAuthors();
                     break;
 
                 case "9":
+                    // Listing all loans with their return dates
                     ListAllLoansWithReturnDates();
                     break;
 
                 case "0":
+                    // Exiting the program
                     Console.WriteLine("Exiting...");
                     return;
 
                 default:
+                    // Handling invalid menu options
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
             }
         }
     }
 
-    // CRUD methods:
-    public void AddAuthor(string firstName, string lastName, DateTime birthDate, string nationality)
+    // Adds a new author to the database
+    public void AddAuthor(string name, DateTime birthDate)
     {
         using (var context = new AppDbContext())
         {
             var author = new Author
             {
-                FirstName = firstName,
-                LastName = lastName,
-                BirthDate = birthDate,
-                Nationality = nationality
+                Name = name,
+                BirthDate = birthDate
             };
 
             context.Authors.Add(author);
             context.SaveChanges();
-            Console.WriteLine($"Author {firstName} {lastName} added successfully.");
+            Console.WriteLine($"Author {name} added successfully.");
         }
     }
 
-    public void AddBook(string title, string genre, int publicationYear, string isbn)
+    // Adds a new book to the database
+    public void AddBook(string title, string genre, int publicationYear)
     {
         using (var context = new AppDbContext())
         {
@@ -128,8 +135,7 @@ class LibraryManager
             {
                 Title = title,
                 Genre = genre,
-                PublicationYear = publicationYear,
-                ISBN = isbn
+                PublicationYear = publicationYear
             };
 
             context.Books.Add(book);
@@ -138,6 +144,7 @@ class LibraryManager
         }
     }
 
+    // Creates a relationship between a book and an author
     public void AddBookAuthorRelation(int bookId, int authorId)
     {
         using (var context = new AppDbContext())
@@ -154,6 +161,7 @@ class LibraryManager
         }
     }
 
+    // Adds a loan record for a book
     public void AddLoan(int bookId, string readerName, DateTime loanDate)
     {
         using (var context = new AppDbContext())
@@ -163,7 +171,7 @@ class LibraryManager
                 BookID = bookId,
                 ReaderName = readerName,
                 LoanDate = loanDate,
-                ReturnDate = null
+                ReturnDate = null // Return date is null until the book is returned
             };
 
             context.Loans.Add(loan);
@@ -172,6 +180,7 @@ class LibraryManager
         }
     }
 
+    // Deletes an author record from the database
     public void DeleteAuthor(int authorId)
     {
         using (var context = new AppDbContext())
@@ -190,6 +199,7 @@ class LibraryManager
         }
     }
 
+    // Deletes a book record from the database
     public void DeleteBook(int bookId)
     {
         using (var context = new AppDbContext())
@@ -208,6 +218,7 @@ class LibraryManager
         }
     }
 
+    // Deletes a loan record from the database
     public void DeleteLoan(int loanId)
     {
         using (var context = new AppDbContext())
@@ -226,6 +237,7 @@ class LibraryManager
         }
     }
 
+    // Lists all books along with their associated authors
     public void ListAllBooksWithAuthors()
     {
         using (var context = new AppDbContext())
@@ -233,15 +245,16 @@ class LibraryManager
             var books = context.Books.Include(b => b.BookAuthors).ThenInclude(ba => ba.Author);
             foreach (var book in books)
             {
-                Console.WriteLine($"Book: {book.Title}, Genre: {book.Genre}, ISBN: {book.ISBN}");
+                Console.WriteLine($"Book: {book.Title}, Genre: {book.Genre}");
                 foreach (var ba in book.BookAuthors)
                 {
-                    Console.WriteLine($"  Author: {ba.Author.FirstName} {ba.Author.LastName}");
+                    Console.WriteLine($"  Author: {ba.Author.Name}");
                 }
             }
         }
     }
 
+    // Lists all loans along with their return dates
     public void ListAllLoansWithReturnDates()
     {
         using (var context = new AppDbContext())

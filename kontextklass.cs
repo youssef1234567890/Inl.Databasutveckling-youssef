@@ -20,27 +20,22 @@ public class AppDbContext : DbContext
     {
         // Define many-to-many relationship between Book and Author using the BookAuthor join table
         modelBuilder.Entity<BookAuthor>()
-            .HasKey(ba => new { ba.BookID, ba.AuthorID });
+            .HasKey(ba => new { ba.BookID, ba.AuthorID }); // Composite key for the join table
 
         modelBuilder.Entity<BookAuthor>()
             .HasOne(ba => ba.Book)
             .WithMany(b => b.BookAuthors)
-            .HasForeignKey(ba => ba.BookID);
+            .HasForeignKey(ba => ba.BookID); // Foreign key linking to Book
 
         modelBuilder.Entity<BookAuthor>()
             .HasOne(ba => ba.Author)
             .WithMany(a => a.BookAuthors)
-            .HasForeignKey(ba => ba.AuthorID);
+            .HasForeignKey(ba => ba.AuthorID); // Foreign key linking to Author
 
         // One-to-many relationship between Book and Loan
         modelBuilder.Entity<Loan>()
             .HasOne(l => l.Book)
             .WithMany(b => b.Loans)
-            .HasForeignKey(l => l.BookID);
-
-        // Optional: Add some indexing or other configurations, if needed
-        modelBuilder.Entity<Book>()
-            .HasIndex(b => b.ISBN)  // Indexing the ISBN for faster searches
-            .IsUnique();
+            .HasForeignKey(l => l.BookID); // Foreign key linking to Book
     }
 }
