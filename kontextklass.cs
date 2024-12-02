@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // Use SQL Server and provide the connection string
-        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=EFCoreOptimizationDemo;Trusted_Connection=True;");
+        optionsBuilder.UseSqlServer("Server=DESKTOP-JFN5NF3;Database=EFCoreDemoDb;Trusted_Connection=True;TrustServerCertificate=True;");
     }
 
     // Configuring model relationships, indexes, and any constraints
