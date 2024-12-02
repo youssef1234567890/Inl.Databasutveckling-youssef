@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("newton")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3b36839df034567ac9818aeddeed9fce9e0fea9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9bc6254747529844ca5a312cf81ec3518fe36fb9")]
 [assembly: System.Reflection.AssemblyProductAttribute("newton")]
 [assembly: System.Reflection.AssemblyTitleAttribute("newton")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

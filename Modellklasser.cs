@@ -1,74 +1,78 @@
 using System;
 using System.Collections.Generic;
 
+// Klass som representerar en författare
 public class Author
 {
-    // Unique identifier for the author
+    // Unikt ID för författaren
     public int AuthorID { get; set; }
 
-    // Full name of the author (combined first and last name)
+    // Fullständigt namn på författaren (för- och efternamn)
     public string Name { get; set; }
 
-    // Birth date of the author
+    // Författarens födelsedatum
     public DateTime BirthDate { get; set; }
 
-    // Many-to-many relationship with Book through the BookAuthor table
-    public ICollection<BookAuthor> BookAuthors { get; set; }
+    // Många-till-många relation med Book genom BookAuthor-tabellen
+    public ICollection<BookAuthor> BookAuthors { get; set; }  // Lista över relationer mellan författaren och böcker
 }
 
+// Klass som representerar en bok
 public class Book
 {
-    // Unique identifier for the book
+    // Unikt ID för boken
     public int BookID { get; set; }
 
-    // Title of the book
+    // Titel på boken
     public string Title { get; set; }
 
-    // Genre of the book (e.g., Fiction, Non-fiction)
+    // Genre för boken (t.ex. Skönlitteratur, Facklitteratur)
     public string Genre { get; set; }
 
-    // Publication year of the book
+    // Utgivningsår för boken
     public int PublicationYear { get; set; }
 
-    // Many-to-many relationship with Author through the BookAuthor table
-    public ICollection<BookAuthor> BookAuthors { get; set; }
+    // Många-till-många relation med Author genom BookAuthor-tabellen
+    public ICollection<BookAuthor> BookAuthors { get; set; }  // Lista över relationer mellan boken och författare
 
-    // One-to-many relationship with Loan table
-    public ICollection<Loan> Loans { get; set; }
+    // En-till-många relation med Loan-tabellen
+    public ICollection<Loan> Loans { get; set; }  // Lista över lån som är kopplade till boken
 }
 
+// Klass som representerar en relation mellan bok och författare
 public class BookAuthor
 {
-    // Foreign key to the Book entity
+    // Främmande nyckel till Book-entiteten
     public int BookID { get; set; }
 
-    // Foreign key to the Author entity
+    // Främmande nyckel till Author-entiteten
     public int AuthorID { get; set; }
 
-    // Navigation property for the related Book
-    public Book Book { get; set; }
+    // Navigationsattribut för relaterad bok
+    public Book Book { get; set; }  // Referens till den kopplade boken
 
-    // Navigation property for the related Author
-    public Author Author { get; set; }
+    // Navigationsattribut för relaterad författare
+    public Author Author { get; set; }  // Referens till den kopplade författaren
 }
 
+// Klass som representerar ett lån
 public class Loan
 {
-    // Unique identifier for the loan
+    // Unikt ID för lånet
     public int LoanID { get; set; }
 
-    // Foreign key to the Book entity
+    // Främmande nyckel till Book-entiteten
     public int BookID { get; set; }
 
-    // Date when the book was loaned
+    // Datum då boken lånades ut
     public DateTime LoanDate { get; set; }
 
-    // Date when the book was returned (nullable in case it's not returned yet)
+    // Datum då boken lämnades tillbaka (kan vara null om den inte har återlämnats)
     public DateTime? ReturnDate { get; set; }
 
-    // Name of the reader who loaned the book
+    // Namn på läsaren som lånade boken
     public string ReaderName { get; set; }
 
-    // Navigation property for the related Book
-    public Book Book { get; set; }
+    // Navigationsattribut för relaterad bok
+    public Book Book { get; set; }  // Referens till den kopplade boken
 }
