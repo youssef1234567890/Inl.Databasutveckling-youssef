@@ -31,77 +31,88 @@ namespace Newton
                 Console.Write("\nEnter your choice: ");
                 string choice = Console.ReadLine();
 
-                switch (choice)
+                try
                 {
-                    case "1":
-                        Console.Write("Enter Full Name: ");
-                        string name = Console.ReadLine();
-                        Console.Write("Enter Birth Date (yyyy-mm-dd): ");
-                        DateTime birthDate = DateTime.Parse(Console.ReadLine());
-                        AddAuthor(name, birthDate);
-                        break;
+                    switch (choice)
+                    {
+                        case "1":
+                            Console.Write("Enter Full Name: ");
+                            string name = Console.ReadLine();
+                            Console.Write("Enter Birth Date (yyyy-mm-dd): ");
+                            DateTime birthDate = DateTime.Parse(Console.ReadLine());
+                            AddAuthor(name, birthDate);
+                            break;
 
-                    case "2":
-                        Console.Write("Enter Title: ");
-                        string title = Console.ReadLine();
-                        Console.Write("Enter Genre: ");
-                        string genre = Console.ReadLine();
-                        Console.Write("Enter Publication Year: ");
-                        int publicationYear = int.Parse(Console.ReadLine());
-                        AddBook(title, genre, publicationYear);
-                        break;
+                        case "2":
+                            Console.Write("Enter Title: ");
+                            string title = Console.ReadLine();
+                            Console.Write("Enter Genre: ");
+                            string genre = Console.ReadLine();
+                            Console.Write("Enter Publication Year: ");
+                            int publicationYear = int.Parse(Console.ReadLine());
+                            AddBook(title, genre, publicationYear);
+                            break;
 
-                    case "3":
-                        Console.Write("Enter BookID: ");
-                        int bookId = int.Parse(Console.ReadLine());
-                        Console.Write("Enter AuthorID: ");
-                        int authorId = int.Parse(Console.ReadLine());
-                        AddBookAuthorRelation(bookId, authorId);
-                        break;
+                        case "3":
+                            Console.Write("Enter BookID: ");
+                            int bookId = int.Parse(Console.ReadLine());
+                            Console.Write("Enter AuthorID: ");
+                            int authorId = int.Parse(Console.ReadLine());
+                            AddBookAuthorRelation(bookId, authorId);
+                            break;
 
-                    case "4":
-                        Console.Write("Enter BookID: ");
-                        int loanBookId = int.Parse(Console.ReadLine());
-                        Console.Write("Enter Reader Name: ");
-                        string readerName = Console.ReadLine();
-                        Console.Write("Enter Loan Date (yyyy-mm-dd): ");
-                        DateTime loanDate = DateTime.Parse(Console.ReadLine());
-                        AddLoan(loanBookId, readerName, loanDate);
-                        break;
+                        case "4":
+                            Console.Write("Enter BookID: ");
+                            int loanBookId = int.Parse(Console.ReadLine());
+                            Console.Write("Enter Reader Name: ");
+                            string readerName = Console.ReadLine();
+                            Console.Write("Enter Loan Date (yyyy-mm-dd): ");
+                            DateTime loanDate = DateTime.Parse(Console.ReadLine());
+                            AddLoan(loanBookId, readerName, loanDate);
+                            break;
 
-                    case "5":
-                        Console.Write("Enter AuthorID to delete: ");
-                        int deleteAuthorId = int.Parse(Console.ReadLine());
-                        DeleteAuthor(deleteAuthorId);
-                        break;
+                        case "5":
+                            Console.Write("Enter AuthorID to delete: ");
+                            int deleteAuthorId = int.Parse(Console.ReadLine());
+                            DeleteAuthor(deleteAuthorId);
+                            break;
 
-                    case "6":
-                        Console.Write("Enter BookID to delete: ");
-                        int deleteBookId = int.Parse(Console.ReadLine());
-                        DeleteBook(deleteBookId);
-                        break;
+                        case "6":
+                            Console.Write("Enter BookID to delete: ");
+                            int deleteBookId = int.Parse(Console.ReadLine());
+                            DeleteBook(deleteBookId);
+                            break;
 
-                    case "7":
-                        Console.Write("Enter LoanID to delete: ");
-                        int deleteLoanId = int.Parse(Console.ReadLine());
-                        DeleteLoan(deleteLoanId);
-                        break;
+                        case "7":
+                            Console.Write("Enter LoanID to delete: ");
+                            int deleteLoanId = int.Parse(Console.ReadLine());
+                            DeleteLoan(deleteLoanId);
+                            break;
 
-                    case "8":
-                        ListAllBooksWithAuthors();
-                        break;
+                        case "8":
+                            ListAllBooksWithAuthors();
+                            break;
 
-                    case "9":
-                        ListAllLoansWithReturnDates();
-                        break;
+                        case "9":
+                            ListAllLoansWithReturnDates();
+                            break;
 
-                    case "0":
-                        Console.WriteLine("Exiting...");
-                        return;
+                        case "0":
+                            Console.WriteLine("Exiting...");
+                            return;
 
-                    default:
-                        Console.WriteLine("Invalid choice. Please try again.");
-                        break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please try again.");
+                            break;
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Input error: {ex.Message}. Please enter the values correctly.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An unexpected error occurred: {ex.Message}. Please try again.");
                 }
             }
         }
